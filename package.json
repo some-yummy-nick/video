@@ -2,7 +2,7 @@
   "name": "create",
   "version": "1.0.0",
   "scripts": {
-    "build": "set NODE_ENV=production&&npm run dist&&npm run webpack",
+    "build": "set NODE_ENV=production&&npm run dest&&npm run webpack",
     "start": "parallelshell \"npm run gulp\" \"npm run webpack\"",
     "webpack": "webpack",
     "dest": "gulp build",
@@ -16,13 +16,20 @@
     "browser-sync": "^2.18.5",
     "css-mqpacker": "^5.0.1",
     "csswring": "^5.1.1",
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
+    "gulp-cache": "^0.4.5",
     "gulp-cssnano": "^2.1.2",
+    "gulp-gh-pages": "^0.5.4",
     "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^3.1.1",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.2.0",
     "gulp-pug": "^3.2.0",
     "gulp-sourcemaps": "^1.9.1",
+    "gulp-svgmin": "^1.2.3",
+    "gulp-svgstore": "^6.1.0",
+    "imagemin-pngquant": "^5.0.0",
     "parallelshell": "^2.0.0",
     "path": "^0.12.7",
     "postcss-cssnext": "^2.9.0",
@@ -30,6 +37,7 @@
     "postcss-easysprites": "^0.1.7",
     "postcss-import": "^9.0.0",
     "postcss-sorting": "^1.7.0",
+    "run-sequence": "^1.2.2",
     "webpack": "^1.14.0"
   }
 }

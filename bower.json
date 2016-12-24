@@ -1,0 +1,19 @@
+{
+  "name": "create",
+  "authors": [
+    "Marat"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/yeffasol/create",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/libraries/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

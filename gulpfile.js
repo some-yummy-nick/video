@@ -7,11 +7,20 @@ const plumber = require('gulp-plumber');
 const gulpif = require('gulp-if');
 const sync = require('browser-sync').create();
 const cssnano = require('gulp-cssnano');
+const pngquant = require('imagemin-pngquant');
+const del = require('del');
+const imagemin = require('gulp-imagemin');
+const cache = require('gulp-cache');
+const svgstore = require('gulp-svgstore');
+const svgmin = require('gulp-svgmin');
+const runSequence = require('run-sequence');
+const path = require('path');
+const ghPages = require('gulp-gh-pages');
 let NODE_ENV = process.env.NODE_ENV || 'development';
 
 
 const assets = [
-  'src/images{,/*.+(jpg|png)}',
+  'src/libraries{,/**}',
   '!src/html{,/**}',
   '!src/styles{,/**}',
   '!src/scripts/script.js',
@@ -52,7 +61,7 @@ gulp.task('styles', () => {
     .pipe(sync.stream());
 });
 
-gulp.task('html', () =>  {
+gulp.task('html', () => {
   return gulp.src('src/html/pages/*.pug')
     .pipe(pug({
       pretty: '  '
@@ -61,10 +70,43 @@ gulp.task('html', () =>  {
     .pipe(sync.stream());
 });
 
+
+gulp.task('images', () => {
+  return gulp.src('./src/images/*.+(jpg|png)')
+    .pipe(cache(imagemin({
+      interlaced: true,
+      progressive: true,
+      use: [pngquant()]
+    })))
+    .pipe(gulp.dest('dest/images'));
+});
+
+gulp.task('svg', () => {
+  return gulp.src('src/images/svg/*.svg')
+    .pipe(svgmin(function (file) {
+      let prefix = path.basename(file.relative, path.extname(file.relative));
+      return {
+        plugins: [{
+          cleanupIDs: {
+            prefix: prefix + '-',
+            minify: true
+          }
+        }]
+      };
+    }))
+    .pipe(svgstore())
+    .pipe(gulp.dest('src/images/'));
+});
+
+gulp.task('deploy', () => {
+  return gulp.src( 'dest/**/*.*')
+    .pipe(ghPages());
+});
+
 gulp.task('server', () => {
   sync.init({
     notify: false,
-    open:false,
+    open: false,
     server: {
       baseDir: 'dest'
     }
@@ -74,17 +116,29 @@ gulp.task('server', () => {
 gulp.task('watch', () => {
   gulp.watch('src/html/**/*.pug', ['html']);
   gulp.watch('src/styles/**/*.css', ['style']);
+  gulp.watch('src/images/*.+(jpg|png)', ['images']);
   gulp.watch(assets, ['copy']);
 });
 
 gulp.task('copy', () => {
   return gulp.src(assets)
-    .pipe(gulp.dest('dest/'))
+    .pipe(gulp.dest('./dest'))
+});
+
+gulp.task('clean', () => {
+  return del('dest/**/*');
+});
+
+gulp.task('build', () => {
+  runSequence('clean',
+    ['copy', 'images', 'styles'],
+    'html');
 });
 
 gulp.task('default', [
   'copy',
   'html',
+  'images',
   'styles',
   'server',
   'watch',
