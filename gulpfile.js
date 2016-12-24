@@ -21,6 +21,7 @@ let NODE_ENV = process.env.NODE_ENV || 'development';
 
 const assets = [
   'src/libraries{,/**}',
+  'src/images{,/favicon/**}',
   '!src/html{,/**}',
   '!src/styles{,/**}',
   '!src/scripts/script.js',
