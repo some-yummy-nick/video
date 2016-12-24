@@ -1,10 +1,35 @@
 {
   "name": "create",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "build": "set NODE_ENV=production&&npm run dist&&npm run webpack",
+    "start": "parallelshell \"npm run gulp\" \"npm run webpack\"",
+    "webpack": "webpack",
+    "dest": "gulp build",
+    "gulp": "gulp"
+  },
   "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "browser-sync": "^2.18.5",
+    "css-mqpacker": "^5.0.1",
+    "csswring": "^5.1.1",
     "gulp": "^3.9.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-if": "^2.0.2",
+    "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.2.0",
-    "postcss-cssnext": "^2.9.0"
+    "gulp-pug": "^3.2.0",
+    "gulp-sourcemaps": "^1.9.1",
+    "parallelshell": "^2.0.0",
+    "path": "^0.12.7",
+    "postcss-cssnext": "^2.9.0",
+    "postcss-custom-media": "^5.0.1",
+    "postcss-easysprites": "^0.1.7",
+    "postcss-import": "^9.0.0",
+    "postcss-sorting": "^1.7.0",
+    "webpack": "^1.14.0"
   }
 }
