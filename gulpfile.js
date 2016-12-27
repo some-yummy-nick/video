@@ -64,9 +64,14 @@ gulp.task('styles', () => {
 
 gulp.task('html', () => {
   return gulp.src('src/html/pages/*.pug')
-    .pipe(pug({
-      pretty: '  '
-    }))
+    .pipe(gulpif(NODE_ENV === 'development',
+      pug({
+        pretty: '  '
+      })
+    ))
+    .pipe(gulpif(NODE_ENV === 'production',
+     pug()
+    ))
     .pipe(gulp.dest('dest'))
     .pipe(sync.stream());
 });
