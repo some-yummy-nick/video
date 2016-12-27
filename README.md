@@ -1,10 +1,10 @@
 для сборки с препроцессором scss:
 
-git clone git@github.com:yeffasol/create.git -b scss project && cd project
+git clone git@github.com:yeffasol/new.git -b scss project && cd project
 
 для сборки с postcss: 
 
-git clone git@github.com:yeffasol/create.git project && cd project
+git clone git@github.com:yeffasol/new.git project && cd project
 
 
 
