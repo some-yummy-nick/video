@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const postcss = require('gulp-postcss');
 const sass = require('gulp-sass');
-const pug = require('gulp-pug');
+const fileinclude = require('gulp-file-include');
 const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
 const gulpif = require('gulp-if');
@@ -64,14 +64,10 @@ gulp.task('styles', () => {
 
 gulp.task('html', () => {
   return gulp.src('src/html/pages/*.pug')
-    .pipe(gulpif(NODE_ENV === 'development',
-      pug({
-        pretty: '  '
-      })
-    ))
-    .pipe(gulpif(NODE_ENV === 'production',
-      pug()
-    ))
+    .pipe(fileinclude({
+      prefix: '@@',
+      basepath: '@file'
+    }))
     .pipe(gulp.dest('dest'))
     .pipe(sync.stream());
 });
