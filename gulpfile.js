@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const postcss = require('gulp-postcss');
-const posthtml = require('gulp-posthtml');
+const sass = require('gulp-sass');
 const pug = require('gulp-pug');
 const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
@@ -28,15 +28,13 @@ const assets = [
 ];
 
 const processors = [
-  require('postcss-import')(),
+  require('autoprefixer')({
+    browsers: ['last 10 versions']
+  }),
   require('postcss-easysprites')({
     imagePath: './src/images/',
     spritePath: './src/images'
   }),
-  require("postcss-cssnext")({
-    browsers: ['last 10 version']
-  }),
-  require('postcss-custom-media')(),
   require('postcss-sorting')({
     'sort-order': 'csscomb'
   }),
@@ -46,11 +44,13 @@ const processors = [
 ];
 
 gulp.task('styles', () => {
-  return gulp.src('./src/styles/style.css')
+  return gulp.src('./src/styles/style.scss')
     .pipe(gulpif(NODE_ENV === 'development',
       sourcemaps.init()
     ))
     .pipe(plumber())
+    .pipe(sass())
+    .pipe(sass().on('error', sass.logError))
     .pipe(postcss(processors))
     .pipe(gulpif(NODE_ENV === 'development',
       sourcemaps.write()
@@ -70,7 +70,7 @@ gulp.task('html', () => {
       })
     ))
     .pipe(gulpif(NODE_ENV === 'production',
-     pug()
+      pug()
     ))
     .pipe(gulp.dest('dest'))
     .pipe(sync.stream());
@@ -121,8 +121,7 @@ gulp.task('server', () => {
 
 gulp.task('watch', () => {
   gulp.watch('src/html/**/*.pug', ['html']);
-  gulp.watch('src/styles/**/*.css', ['style']);
-  gulp.watch('src/images/*.+(jpg|png)', ['images']);
+  gulp.watch('src/styles/**/*.scss', ['styles']);
   gulp.watch(assets, ['copy']);
 });
 

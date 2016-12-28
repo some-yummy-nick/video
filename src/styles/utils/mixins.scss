@@ -1,0 +1,152 @@
+@mixin clearfix {
+  &::before,
+  &::after {
+    content: " ";
+    display: table;
+  }
+  &::after {
+    clear: both;
+  }
+}
+
+
+
+@mixin container {
+  width: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right:  auto;
+  margin-left: auto;
+  max-width: 1300px;
+  @media ($tablet-widths) {
+    padding-right: 0;
+    padding-left: 0;
+    width: 640px;
+  }
+  @media ($desktop-widths) {
+    width: 960px;
+  }
+}
+
+@mixin img{
+  display: block;
+  max-width: 100%;
+  max-height: auto;
+}
+
+@mixin noList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin noDecor {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@mixin inlineBlock($valign: top) {
+  display: inline-block;
+  vertical-align: $valign;
+}
+
+@mixin marginRight($margin-right:20px) {
+  margin-right: $margin-right;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+@mixin marginLeft($margin-left:20px) {
+  margin-left: $margin-left;
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+@mixin absoluteCenter {
+  display: block;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@mixin placeColor($color: #000000) {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+  &:-moz-placeholder {
+    color: $color;
+  }
+  &::-moz-placeholder {
+    color: $color;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+}
+@mixin triangle($triangle-size,$triangle-color,$triangle-direction) {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border: inset $triangle-size;
+
+  @if ($triangle-direction == down) {
+    border-color: $triangle-color transparent transparent;
+    border-top-style: solid;
+    border-bottom-width: 0;
+  }
+  @if ($triangle-direction == up) {
+    border-color: transparent transparent $triangle-color;
+    border-bottom-style: solid;
+    border-top-width: 0;
+  }
+  @if ($triangle-direction == right) {
+    border-color: transparent transparent transparent $triangle-color;
+    border-left-style: solid;
+    border-right-width: 0;
+  }
+  @if ($triangle-direction == left) {
+    border-color: transparent $triangle-color transparent transparent;
+    border-right-style: solid;
+    border-left-width: 0;
+  }
+}
+@mixin backgroundTriangle($color: black) {
+  $rgb: 'rgb%28#{red($color)}, #{green($color)}, #{blue($color)}%29';
+
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: #{$rgb}'></polygon></svg>");
+
+  @media screen and (min-width:0\0) {
+    @if lightness($color) < 60% {
+      // White triangle
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg==');
+    }
+    @else {
+      // Black triangle
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAMBJREFUeNrEllsOhCAMRVszC9IlzU7KCmVHTJsoMWYMUtpyv9BgbuXQB5ZSdgBYYY4ycgBivk8KYFsQMfMiTTBP4o3nUzCKzOabLJbLy2/g31evGkAginR4/ZegKH5qX3bJCscA3t0x3kgO5tQFyhhFf50xRqFLbyMUNJQzgyjGS/wgCpvKqkRBpuWrE4V9d+1E4dPUXqIg107SQOE/2DRQxMwTDygIInVDET9T3lCoj/6j/VCmGjZOl2lKpZ8AAwDQP7zIimDGFQAAAABJRU5ErkJggg==');
+    }
+  }
+}
+@mixin elementInvisible {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/// Reverses the CSS output created by the `elementInvisible` mixin.
+@mixin elementVisible {
+  position: static !important;
+  height: auto;
+  width: auto;
+  overflow: visible;
+  clip: auto;
+}

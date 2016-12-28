@@ -30,10 +30,6 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV)
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "common",
-      minChunks: 2
     })
   ]
 };

@@ -1,0 +1,56 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+html,
+body {
+  height: 100%;
+}
+html{
+  // set background color for overscroll
+}
+body {
+  min-height: 100vh;
+  position: relative;
+  font-family: $font;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.42;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  font-weight: normal;
+}
+img{
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.wrapper{
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+.content{
+  display: table-row;
+  height: 100%;
+}
+.noscript{
+  display: block;
+  text-align: center;
+  position: fixed;
+  opacity: 0.7;
+  top: 0 ;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
+  color: #0000AA;
+  background: #ff7b93;
+}
