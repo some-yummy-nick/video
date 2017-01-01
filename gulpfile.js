@@ -12,6 +12,7 @@ const del = require('del');
 const imagemin = require('gulp-imagemin');
 const cache = require('gulp-cache');
 const svgstore = require('gulp-svgstore');
+const htmlmin = require('gulp-htmlmin');
 const svgmin = require('gulp-svgmin');
 const runSequence = require('run-sequence');
 const path = require('path');
@@ -68,6 +69,9 @@ gulp.task('html', () => {
       prefix: '@@',
       basepath: '@file'
     }))
+    .pipe(gulpif(NODE_ENV === 'production',
+      htmlmin({collapseWhitespace: true})
+    ))
     .pipe(gulp.dest('dest'))
     .pipe(sync.stream());
 });
