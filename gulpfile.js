@@ -64,7 +64,7 @@ gulp.task('styles', () => {
 });
 
 gulp.task('html', () => {
-  return gulp.src('src/html/pages/*.pug')
+  return gulp.src('src/html/pages/*.html')
     .pipe(fileinclude({
       prefix: '@@',
       basepath: '@file'
@@ -120,7 +120,7 @@ gulp.task('server', () => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch('src/html/**/*.pug', ['html']);
+  gulp.watch('src/html/**/*.html', ['html']);
   gulp.watch('src/styles/**/*.scss', ['styles']);
   gulp.watch(assets, ['copy']);
 });
