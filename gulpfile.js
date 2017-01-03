@@ -5,6 +5,7 @@ const fileinclude = require('gulp-file-include');
 const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
 const gulpif = require('gulp-if');
+const gutil = require('gulp-util');
 const sync = require('browser-sync').create();
 const cssnano = require('gulp-cssnano');
 const pngquant = require('imagemin-pngquant');
@@ -49,7 +50,11 @@ gulp.task('styles', () => {
     .pipe(gulpif(NODE_ENV === 'development',
       sourcemaps.init()
     ))
-    .pipe(plumber())
+    .pipe(plumber({
+      errorHandler: function (error) {
+        gutil.log('Error: ' + error.message);
+        this.emit('end');
+      }}))
     .pipe(sass())
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss(processors))
