@@ -6,6 +6,7 @@ const fileinclude = require('gulp-file-include');
 const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
 const gulpif = require('gulp-if');
+const gutil = require('gulp-util');
 const sync = require('browser-sync').create();
 const cssnano = require('gulp-cssnano');
 const pngquant = require('imagemin-pngquant');
@@ -13,11 +14,13 @@ const del = require('del');
 const imagemin = require('gulp-imagemin');
 const cache = require('gulp-cache');
 const svgstore = require('gulp-svgstore');
+const htmlmin = require('gulp-htmlmin');
 const svgmin = require('gulp-svgmin');
 const runSequence = require('run-sequence');
 const path = require('path');
 const ghPages = require('gulp-gh-pages');
 let NODE_ENV = process.env.NODE_ENV || 'development';
+
 
 const assets = [
   'src/libraries{,/**}',
@@ -53,7 +56,11 @@ gulp.task('styles', () => {
     .pipe(gulpif(NODE_ENV === 'development',
       sourcemaps.init()
     ))
-    .pipe(plumber())
+    .pipe(plumber({
+      errorHandler: function (error) {
+        gutil.log('Error: ' + error.message);
+        this.emit('end');
+      }}))
     .pipe(sass())
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss(processors))
@@ -66,6 +73,17 @@ gulp.task('styles', () => {
     .pipe(gulp.dest('./dest/styles'))
     .pipe(sync.stream());
 });
+
+gulp.task('html', () => {
+  return gulp.src('src/html/pages/*.pug')
+    .pipe(fileinclude({
+      prefix: '@@',
+      basepath: '@file'
+    }))
+    .pipe(gulp.dest('dest'))
+    .pipe(sync.stream());
+});
+
 
 gulp.task('images', () => {
   return gulp.src('./src/images/*.+(jpg|png)')
@@ -110,7 +128,7 @@ gulp.task('server', () => {
 });
 
 gulp.task('watch', () => {
-  gulp.watch('src/html/**/*.pug', ['html']);
+  gulp.watch('src/html/**/*.html', ['html']);
   gulp.watch('src/styles/**/*.scss', ['styles']);
   gulp.watch(assets, ['copy']);
 });
