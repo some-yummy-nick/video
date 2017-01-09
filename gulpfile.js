@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const task = require('gulp-lazy-task')('./gulp-tasks');
 const postcss = require('gulp-postcss');
 const sass = require('gulp-sass');
 const fileinclude = require('gulp-file-include');
@@ -17,7 +18,6 @@ const runSequence = require('run-sequence');
 const path = require('path');
 const ghPages = require('gulp-gh-pages');
 let NODE_ENV = process.env.NODE_ENV || 'development';
-
 
 const assets = [
   'src/libraries{,/**}',
@@ -43,6 +43,11 @@ const processors = [
   })
 ];
 
+task('html', {
+  src:['src/html/pages/*.html'],
+  dest: 'dest'
+});
+
 gulp.task('styles', () => {
   return gulp.src('./src/styles/style.scss')
     .pipe(gulpif(NODE_ENV === 'development',
@@ -61,17 +66,6 @@ gulp.task('styles', () => {
     .pipe(gulp.dest('./dest/styles'))
     .pipe(sync.stream());
 });
-
-gulp.task('html', () => {
-  return gulp.src('src/html/pages/*.pug')
-    .pipe(fileinclude({
-      prefix: '@@',
-      basepath: '@file'
-    }))
-    .pipe(gulp.dest('dest'))
-    .pipe(sync.stream());
-});
-
 
 gulp.task('images', () => {
   return gulp.src('./src/images/*.+(jpg|png)')
