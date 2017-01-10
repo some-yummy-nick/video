@@ -4,8 +4,12 @@ sync = require('browser-sync').create(),
   runSequence = require('run-sequence'),
   gulpIf = require('gulp-if'),
   fileInclude = require('gulp-file-include'),
+  useref = require('gulp-useref'),
   htmlmin = require('gulp-htmlmin'),
+  uglify = require('gulp-uglify'),
   gutil = require('gulp-util'),
+  bower = require('gulp-bower'),
+  wiredep = require('wiredep').stream,
   sourcemaps = require('gulp-sourcemaps'),
   plumber = require('gulp-plumber'),
   sass = require('gulp-sass'),
@@ -55,6 +59,13 @@ gulp.task('html', () => {
       prefix: '@@',
       basepath: '@file'
     }))
+    .pipe(wiredep({
+      optional: 'configuration',
+      goes: 'here'
+    }))
+    .pipe(useref())
+    .pipe(gulpIf('*.js', uglify()))
+    .pipe(gulpIf('*.css', cssnano()))
     .pipe(gulpIf(NODE_ENV === 'production',
       htmlmin({collapseWhitespace: true})
     ))
@@ -138,7 +149,8 @@ gulp.task('clean', () => {
 });
 
 gulp.task('build', () => {
-  runSequence('clean', ['copy', 'images', 'styles'], 'html');
+  runSequence('clean', ['copy', 'images', 'styles'], 'html', 'bower');
 });
-
-gulp.task('default', ['copy', 'html', 'images', 'styles', 'server', 'watch']);
+gulp.task('default', () => {
+  runSequence('clean', ['copy', 'images', 'styles'], 'html', 'bower', 'server', 'watch');
+});
