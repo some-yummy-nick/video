@@ -1,98 +1,98 @@
 const gulp = require('gulp');
-const task = require('gulp-lazy-task')('./gulp-tasks');
-const postcss = require('gulp-postcss');
-const sass = require('gulp-sass');
-const fileinclude = require('gulp-file-include');
-const sourcemaps = require('gulp-sourcemaps');
-const plumber = require('gulp-plumber');
-const gulpif = require('gulp-if');
-const gutil = require('gulp-util');
-const sync = require('browser-sync').create();
-const cssnano = require('gulp-cssnano');
-const pngquant = require('imagemin-pngquant');
-const del = require('del');
-const imagemin = require('gulp-imagemin');
-const cache = require('gulp-cache');
-const svgstore = require('gulp-svgstore');
-const htmlmin = require('gulp-htmlmin');
-const svgmin = require('gulp-svgmin');
-const runSequence = require('run-sequence');
-const path = require('path');
-const ghPages = require('gulp-gh-pages');
-let NODE_ENV = process.env.NODE_ENV || 'development';
+sync = require('browser-sync').create(),
+  del = require('del'),
+  runSequence = require('run-sequence'),
+  gulpIf = require('gulp-if'),
+  fileInclude = require('gulp-file-include'),
+  htmlmin = require('gulp-htmlmin'),
+  gutil = require('gulp-util'),
+  sourcemaps = require('gulp-sourcemaps'),
+  plumber = require('gulp-plumber'),
+  sass = require('gulp-sass'),
+  postcss = require('gulp-postcss'),
+  cssnano = require('gulp-cssnano'),
+  pngquant = require('imagemin-pngquant'),
+  imagemin = require('gulp-imagemin'),
+  cache = require('gulp-cache'),
+  svgmin = require('gulp-svgmin'),
+  svgstore = require('gulp-svgstore'),
+  ghPages = require('gulp-gh-pages');
 
 
-const assets = [
-  'src/libraries{,/**}',
-  'src/images{,/favicon/**}',
-  '!src/html{,/**}',
-  '!src/styles{,/**}',
-  '!src/scripts/script.js',
-];
+let processors = [
+    require('autoprefixer')({
+      browsers: ['last 10 versions']
+    }),
+    require('postcss-easysprites')({
+      imagePath: './src/images/',
+      spritePath: './src/images'
+    }),
+    require('postcss-sorting')({
+      'sort-order': 'csscomb'
+    }),
+    require('css-mqpacker')({
+      sort: true
+    })
+  ],
+  assets = [
+    'src/libraries{,/**}',
+    'src/images{,/favicon/**}',
+    '!src/html{,/**}',
+    '!src/styles{,/**}',
+    '!src/scripts/script.js',
+  ],
+  NODE_ENV = process.env.NODE_ENV || 'development';
 
-const processors = [
-  require('autoprefixer')({
-    browsers: ['last 10 versions']
-  }),
-  require('postcss-easysprites')({
-    imagePath: './src/images/',
-    spritePath: './src/images'
-  }),
-  require('postcss-sorting')({
-    'sort-order': 'csscomb'
-  }),
-  require('css-mqpacker')({
-    sort: true
-  })
-];
 
-task('html', {
-  src:['src/html/pages/*.html'],
-  dest: 'dest'
+gulp.task('copy', () => {
+  return gulp.src(assets)
+    .pipe(gulp.dest('./dest'))
+});
+
+gulp.task('html', () => {
+  return gulp.src('src/html/pages/*.html')
+    .pipe(fileInclude({
+      prefix: '@@',
+      basepath: '@file'
+    }))
+    .pipe(gulpIf(NODE_ENV === 'production',
+      htmlmin({collapseWhitespace: true})
+    ))
+    .pipe(gulp.dest('dest'))
+    .pipe(sync.stream());
 });
 
 gulp.task('styles', () => {
-  return gulp.src('./src/styles/style.scss')
-    .pipe(gulpif(NODE_ENV === 'development',
+  return gulp.src('src/styles/style.scss')
+    .pipe(gulpIf(NODE_ENV === 'development',
       sourcemaps.init()
     ))
     .pipe(plumber({
       errorHandler: function (error) {
         gutil.log('Error: ' + error.message);
         this.emit('end');
-      }}))
+      }
+    }))
     .pipe(sass())
-    .pipe(sass().on('error', sass.logError))
     .pipe(postcss(processors))
-    .pipe(gulpif(NODE_ENV === 'development',
+    .pipe(gulpIf(NODE_ENV === 'development',
       sourcemaps.write()
     ))
-    .pipe(gulpif(NODE_ENV === 'production',
+    .pipe(gulpIf(NODE_ENV === 'production',
       cssnano()
     ))
-    .pipe(gulp.dest('./dest/styles'))
+    .pipe(gulp.dest('dest/styles'))
     .pipe(sync.stream());
 });
-
-gulp.task('html', () => {
-  return gulp.src('src/html/pages/*.pug')
-    .pipe(fileinclude({
-      prefix: '@@',
-      basepath: '@file'
-    }))
-    .pipe(gulp.dest('dest'))
-    .pipe(sync.stream());
-});
-
 
 gulp.task('images', () => {
-  return gulp.src('./src/images/*.+(jpg|png)')
+  return gulp.src('src/images/*.+(jpg|png)')
     .pipe(cache(imagemin({
       interlaced: true,
       progressive: true,
       use: [pngquant()]
     })))
-    .pipe(gulp.dest('dest/images'));
+    .pipe(gulp.dest('dest/images'))
 });
 
 gulp.task('svg', () => {
@@ -109,11 +109,11 @@ gulp.task('svg', () => {
       };
     }))
     .pipe(svgstore())
-    .pipe(gulp.dest('src/images/'));
+    .pipe(gulp.dest('src/images'))
 });
 
 gulp.task('deploy', () => {
-  return gulp.src( 'dest/**/*.*')
+  return gulp.src('dest/**/*.*')
     .pipe(ghPages());
 });
 
@@ -133,26 +133,12 @@ gulp.task('watch', () => {
   gulp.watch(assets, ['copy']);
 });
 
-gulp.task('copy', () => {
-  return gulp.src(assets)
-    .pipe(gulp.dest('./dest'))
-});
-
 gulp.task('clean', () => {
   return del('dest/**/*');
 });
 
 gulp.task('build', () => {
-  runSequence('clean',
-    ['copy', 'images', 'styles'],
-    'html');
+  runSequence('clean', ['copy', 'images', 'styles'], 'html');
 });
 
-gulp.task('default', [
-  'copy',
-  'html',
-  'images',
-  'styles',
-  'server',
-  'watch',
-]);
+gulp.task('default', ['copy', 'html', 'images', 'styles', 'server', 'watch']);

@@ -32,6 +32,7 @@
     "gulp-sourcemaps": "^1.9.1",
     "gulp-svgmin": "^1.2.3",
     "gulp-svgstore": "^6.1.0",
+    "gulp-task-master": "^1.1.1",
     "gulp-util": "^3.0.8",
     "imagemin-pngquant": "^5.0.0",
     "parallelshell": "^2.0.0",
