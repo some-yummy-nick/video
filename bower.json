@@ -1,10 +1,10 @@
 {
-  "name": "create",
+  "name": "new",
   "authors": [
     "Marat"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/yeffasol/create",
+  "homepage": "https://github.com/yeffasol/new",
   "private": true,
   "ignore": [
     "**/.*",

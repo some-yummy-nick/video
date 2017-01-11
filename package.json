@@ -1,6 +1,5 @@
 {
-  "name": "create",
-  "version": "1.0.0",
+  "name": "new",
   "scripts": {
     "build": "set NODE_ENV=production&&npm run dest&&npm run webpack",
     "start": "parallelshell \"npm run gulp\" \"npm run webpack\"",
