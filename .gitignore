@@ -1,5 +1,5 @@
 node_modules/
-source/lib/bower/
+src/libraries/bower/
 dest/
 .publish/
 .idea/

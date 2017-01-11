@@ -149,8 +149,8 @@ gulp.task('clean', () => {
 });
 
 gulp.task('build', () => {
-  runSequence('clean', ['copy', 'images', 'styles'], 'html', 'bower');
+  runSequence('clean', ['copy', 'images', 'styles'], 'html');
 });
 gulp.task('default', () => {
-  runSequence('clean', ['copy', 'images', 'styles'], 'html', 'bower', 'server', 'watch');
+  runSequence('clean', ['copy', 'images', 'styles'], 'html', 'server', 'watch');
 });
