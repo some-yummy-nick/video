@@ -4,6 +4,8 @@ git remote add origin git@github.com:yeffasol/project.git >/dev/null 2>&1 || git
 
 npm i
 
+bower i
+
 npm run start для сборки development
 
 npm run build для сборки production
