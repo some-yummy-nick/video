@@ -152,5 +152,5 @@ gulp.task('build', () => {
   runSequence('clean', ['copy', 'images', 'styles'], 'html');
 });
 gulp.task('default', () => {
-  runSequence('clean', ['copy', 'images', 'styles'], 'html', 'server', 'watch');
+  runSequence(['copy', 'images', 'styles'], 'html', 'server', 'watch');
 });
