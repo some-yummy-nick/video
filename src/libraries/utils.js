@@ -1,7 +1,3 @@
-var echo = function(data){
-  console.log(data);
-};
-
 function hasClass(el, cls) {
   return el.className && new RegExp("(\\s|^)" + cls + "(\\s|$)").test(el.className);
 }
