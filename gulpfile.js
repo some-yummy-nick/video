@@ -20,6 +20,7 @@ sync = require('browser-sync').create(),
   cache = require('gulp-cache'),
   svgmin = require('gulp-svgmin'),
   svgstore = require('gulp-svgstore'),
+  path = require('path'),
   ghPages = require('gulp-gh-pages');
 
 
