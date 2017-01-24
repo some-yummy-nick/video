@@ -26,6 +26,9 @@
   @media ($desktop-widths) {
     width: 960px;
   }
+  @media ($large-widths) {
+    width: 1200px;
+  }
 }
 
 @mixin img{
