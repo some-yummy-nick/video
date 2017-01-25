@@ -4,12 +4,12 @@ const path = require('path');
 module.exports = {
 
   entry: {
-    index: path.resolve('./src/scripts/index.js')
+    index: path.resolve('./src/js/index.js')
   },
 
   output: {
     filename: '[name].js',
-    path: path.resolve('./dest/scripts/'),
+    path: path.resolve('./dest/js/'),
     library:['name']
   },
   module: {

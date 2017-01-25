@@ -98,7 +98,7 @@ gulp.task('styles', () => {
 });
 
 gulp.task('images', () => {
-  return gulp.src('src/images/*.+(jpg|png)')
+  return gulp.src('src/images/*.+(jpg|png|svg)')
     .pipe(cache(imagemin({
       interlaced: true,
       progressive: true,
