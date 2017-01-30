@@ -15,6 +15,7 @@ sync = require('browser-sync').create(),
   sass = require('gulp-sass'),
   postcss = require('gulp-postcss'),
   cssnano = require('gulp-cssnano'),
+  csscomb = require('gulp-csscomb'),
   pngquant = require('imagemin-pngquant'),
   imagemin = require('gulp-imagemin'),
   cache = require('gulp-cache'),
@@ -32,9 +33,10 @@ let processors = [
       imagePath: './src/images/',
       spritePath: './src/images'
     }),
-    require('postcss-sorting')({
-      'sort-order': 'csscomb'
+    require('postcss-assets')({
+      loadPaths: ['./src/images/base64']
     }),
+    require('postcss-short')({ /* options */ }),
     require('css-mqpacker')({
       sort: true
     })
@@ -87,6 +89,7 @@ gulp.task('styles', () => {
     }))
     .pipe(sass())
     .pipe(postcss(processors))
+    .pipe(csscomb())
     .pipe(gulpIf(NODE_ENV === 'development',
       sourcemaps.write()
     ))
