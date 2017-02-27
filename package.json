@@ -1,5 +1,6 @@
 {
   "name": "new",
+  "private": true,
   "scripts": {
     "build": "set NODE_ENV=production&&npm run dest&&npm run webpack",
     "start": "parallelshell \"npm run gulp\" \"npm run webpack\"",
@@ -41,8 +42,10 @@
     "parallelshell": "^2.0.0",
     "path": "^0.12.7",
     "postcss-assets": "^4.1.0",
+    "postcss-color-rgba-fallback": "^2.2.0",
     "postcss-csscomb": "^1.0.2",
     "postcss-easysprites": "^0.1.7",
+    "postcss-rgb-plz": "^2.0.2",
     "postcss-short": "^3.0.3",
     "postcss-sorting": "^1.7.0",
     "run-sequence": "^1.2.2",

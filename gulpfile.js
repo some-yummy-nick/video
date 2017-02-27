@@ -33,6 +33,8 @@ let processors = [
       imagePath: './src/images/',
       spritePath: './src/images'
     }),
+    require("postcss-color-rgba-fallback"),//добавляет цвет если нет поддержки прозрачности
+    require('postcss-rgb-plz'),//конвертирует hex в rgb
     require('postcss-assets')({
       loadPaths: ['./src/images/base64']
     }),
