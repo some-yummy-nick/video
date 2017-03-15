@@ -45,6 +45,7 @@
     "postcss-color-rgba-fallback": "^2.2.0",
     "postcss-csscomb": "^1.0.2",
     "postcss-easysprites": "^0.1.7",
+    "postcss-filter-gradient": "^0.2.6",
     "postcss-rgb-plz": "^2.0.2",
     "postcss-short": "^3.0.3",
     "postcss-sorting": "^1.7.0",
