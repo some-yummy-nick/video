@@ -3,6 +3,8 @@ src/libraries/bower/
 dest/
 .publish/
 .idea/
+bash.exe*
+npm-debug.log*
 *.log
 Thumbs.db
 .DS_Store

@@ -1,5 +1,6 @@
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const webpack = require('webpack');
+const BowerWebpackPlugin = require("bower-webpack-plugin");
 const path = require('path');
 module.exports = {
 
@@ -30,6 +31,12 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV)
+    }),
+    new BowerWebpackPlugin({
+      modulesDirectories: ['src/libraries/bower'],
+      manifestFiles: ['bower.json'],
+      includes: /.*/,
+      excludes: /.*\.less$/
     })
   ]
 };

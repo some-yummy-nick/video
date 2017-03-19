@@ -1,9 +1,8 @@
 {
-  "name": "nerds",
+  "name": "new",
   "authors": [
     "Marat"
   ],
-  "license": "ISC",
   "homepage": "https://github.com/yeffasol/new",
   "private": true,
   "ignore": [
@@ -15,6 +14,6 @@
     "tests"
   ],
   "dependencies": {
-    "normalize-css": "^5.0.0"
+    "normalize-css": "latest"
   }
 }
