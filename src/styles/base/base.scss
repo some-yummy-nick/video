@@ -34,6 +34,12 @@ img{
   max-width: 100%;
   height: auto;
 }
+a{
+  color: inherit;
+  &:hover{
+    text-decoration: none;
+  }
+}
 .wrapper{
   display: table;
   height: 100%;
