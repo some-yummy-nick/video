@@ -1,5 +1,5 @@
 {
-  "name": "new",
+  "name": "video",
   "private": true,
   "scripts": {
     "build": "set NODE_ENV=production&&npm run dest&&npm run webpack",

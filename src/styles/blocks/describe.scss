@@ -1,0 +1,124 @@
+@import "../../../node_modules/fontawesome-scss/fontAwesome";
+
+.describe {
+  position: relative;
+  padding-top: 20px;
+  background-color: white;
+  color: black;
+  min-height: 200px;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  .container {
+    display: block;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  &__title {
+    font-size: 17px;
+  }
+  &__view {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    color: gray;
+  }
+  &__tools {
+    @include noList;
+  }
+  &__item {
+    position: relative;
+    padding: 7px 16px 8px;
+    @include inlineBlock();
+    font-size: 12.5px;
+    padding-left: 40px;
+    color: white;
+    &::after {
+      position: absolute;
+      display: block;
+      content: "";
+      top: 50%;
+      left: 20px;
+      opacity: 0.5;
+      transform: translateY(-50%);
+    }
+    button {
+      border: none;
+      cursor: pointer;
+      background-color: transparent;
+      color: #4a7198;
+    }
+    &--like {
+      background-color: #5e81a8;
+      &::after {
+        @include fa($fa-heart, #fff, 18px);
+      }
+      button {
+        color: white;
+        background-color: transparent;
+      }
+    }
+    &--share {
+      &::after {
+        @include fa($fa-bullhorn, #5e81a8, 18px);
+      }
+    }
+    &--add {
+      &::after {
+        @include fa($fa-plus, #5e81a8, 18px);
+      }
+    }
+    &--edit {
+      &::after {
+        @include fa($fa-pencil, #5e81a8, 18px);
+      }
+    }
+
+    &:hover {
+      background-color: #e5ebf1;
+      &::after {
+        opacity: 1;
+      }
+    }
+    &--more {
+      top: -10px;
+      &::after {
+        top: 25px;
+        left: 75px;
+        @include fa($fa-caret-down, #5e81a8, 18px);
+      }
+      ul {
+        display: none;
+        border: 1px solid #5e81a8;
+        border-top-color: transparent;
+        @include noList;
+        padding: 10px;
+        li {
+          margin-bottom: 10px;
+          a {
+            text-decoration: none;
+            font-size: 13px;
+            color: #5e81a8;
+          }
+        }
+      }
+      button {
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+        border: 1px solid transparent;
+      }
+      &:hover {
+        background-color: transparent;
+        button {
+          border: 1px solid #5e81a8;
+          background-color: #e5ebf1;
+          border-bottom-color: transparent;
+        }
+        ul {
+          display: block;
+        }
+      }
+    }
+  }
+}

@@ -24,6 +24,7 @@ body {
   font-weight: 400;
   line-height: 1.42;
   overflow-x: hidden;
+  background-color: rgba(black,0.8);
 }
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
@@ -40,15 +41,7 @@ a{
     text-decoration: none;
   }
 }
-.wrapper{
-  display: table;
-  height: 100%;
-  width: 100%;
-}
-.content{
-  display: table-row;
-  height: 100%;
-}
+
 .noscript{
   display: block;
   text-align: center;

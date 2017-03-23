@@ -1,9 +1,9 @@
 {
-  "name": "new",
+  "name": "video",
   "authors": [
     "Marat"
   ],
-  "homepage": "https://github.com/yeffasol/new",
+  "homepage": "https://github.com/yeffasol/video",
   "private": true,
   "ignore": [
     "**/.*",
